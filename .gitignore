@@ -1,0 +1,9 @@
+*~
+directives.json
+appconfig.json
+output
+util
+ajax
+results
+*.pyc
+*.bak

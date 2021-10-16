@@ -1,0 +1,147 @@
+{
+    "moduleid"      : "afsomo"
+    ,"label"        : "US-SOMO AlphaFold Hydrodynamic Calculations"
+    ,"executable"   : "afsomo"
+    ,"submitpolicy" : "all"
+    ,"nosubmit"     : "true"
+    ,"noreset"      : "true"
+    ,"fields" : [
+        {
+            "role"   : "input"
+            ,"id"    : "label_0"
+            ,"type"  : "label"
+            ,"label" : "<a target=_blank href=somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk/>AlphaFold</a> Hydrodynamic Calculations"
+        }
+        ,{
+            "role"   : "input"
+            "id"     : "searchkey"
+            "type"   : "text"
+            "maxlen" : 30
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "name"
+            ,"label" : "Model name"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "source"
+            ,"label" : "Source"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "sp"
+            ,"label" : "Signal protein cut"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "afdate"
+            ,"label" : "AlphaFold date"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "mw"
+            ,"label" : "Molecular mass [Da]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "psv"
+            ,"label" : "Partial specific volume [cm^3/g]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "S"
+            ,"label" : "Sedimentation coefficient s [S]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "S_sd"
+            ,"label" : "Sedimentation coefficient s.d."
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Dtr"
+            ,"label" : "Translational diffusion coefficient D [cm/sec^2]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Dtr_sd"
+            ,"label" : "Translational diffusion coefficient D s.d."
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Rs"
+            ,"label" : "Stokes radius [nm]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Rs_sd"
+            ,"label" : "Stokes radius s.d."
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Eta"
+            ,"label" : "Intrinsic viscosity [cm^3/g]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Eta_sd"
+            ,"label" : "Intrisic viscosity s.d."
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "Rg"
+            ,"label" : "Radius of gyration (+r) [A] (from PDB atomic structure)"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "ExtX"
+            ,"label" : "Maximum extensions X [nm]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "ExtY"
+            ,"label" : "Maximum extensions Y [nm]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "ExtZ"
+            ,"label" : "Maximum extensions Z [nm]"
+            ,"type"  : "text"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "pdbfile"
+            ,"label" : "PDB file"
+            ,"type"  : "file"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "prfile"
+            ,"label" : "P(r) data"
+            ,"type"  : "file"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "prplot"
+            ,"type"  : "plotly"
+        }
+    ]
+}
