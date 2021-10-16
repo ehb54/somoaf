@@ -1,17 +1,18 @@
 {
     "menu" : [
         {
-            "id"      : "lookup",
-            "label"   : "Lookup",
-            "icon"    : "pngs/gears.png",
-            "autorun" : "somoaf"
-	    "modules" : [
+            "id"       : "lookup",
+            "label"    : "Lookup",
+            "icon"     : "pngs/gears.png",
+            "autorun"  : "afsomo",
+            "nobutton" : "true",
+	    "modules"  : [
                 {
-                    "id"    : "somoaf"
+                    "id"    : "afsomo"
                     ,"label" : "US-SOMO AlphaFold Hydrodynamic Calculations"
                 }
             ]
-        },
+        }
         ,{
             "id"      : "Acknowledgements_menu",
             "label"   : "Acknowledgements",

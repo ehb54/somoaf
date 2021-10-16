@@ -14,9 +14,10 @@
         }
         ,{
             "role"   : "input"
-            "id"     : "searchkey"
-            "type"   : "text"
-            "maxlen" : 30
+            ,"id"     : "searchkey"
+            ,"label"  : "Search"
+            ,"type"   : "text"
+            ,"maxlen" : 30
         }
         ,{
             "role"   : "output"
@@ -142,6 +143,7 @@
             "role"   : "output"
             ,"id"    : "prplot"
             ,"type"  : "plotly"
+            ,"label" : ""
         }
     ]
 }
