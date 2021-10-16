@@ -10,7 +10,7 @@
             "role"   : "input"
             ,"id"    : "label_0"
             ,"type"  : "label"
-            ,"label" : "<a target=_blank href=somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk/>AlphaFold</a> Hydrodynamic Calculations"
+            ,"label" : "<center><big><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Hydrodynamic Calculations</big></center>"
         }
         ,{
             "role"   : "input"
