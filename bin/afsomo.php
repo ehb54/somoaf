@@ -61,10 +61,12 @@ if ( !$found ) {
 https://www.uniprot.org/uniprot/A0A023GPK8
 
 $uniprot_name      = preg_replace( '/-F.*$/', '', $found->_id );
-$output->uniprot   = sprintf( "<a target=_blank href=https://www.uniprot.org/uniprot/%s>go to UniProt &#x1F517;</a>", $uniprot_name );
-$output->alphafold = sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>go to AlphaFold &#x1F517;</a>", $uniprot_name );
+$output->links     = 
+    sprintf( "<a target=_blank href=https://www.uniprot.org/uniprot/%s>UniProt &#x1F517;</a>&nbsp;&nbsp;&nbsp;", $uniprot_name )
+    . sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>AlphaFold &#x1F517;</a>",             $uniprot_name )
+    ;
 $output->name      = $found->name;
-$output->source    = $found->source;
+$output->source    = str_replace( '; ', "\n", $found->source );
 $output->sp        = $found->sp ? $found->sp : "n/a";
 $output->afdate    = $found->afdate;
 $output->mw        = sprintf( "%.1f", $found->mw );
@@ -77,9 +79,11 @@ $output->Rg        = sprintf( "%.3g", $found->Rg );
 $output->ExtX      = sprintf( "%.3g", $found->ExtX );
 $output->ExtY      = sprintf( "%.3g", $found->ExtY );
 $output->ExtZ      = sprintf( "%.3g", $found->ExtZ );
-$output->alphafold = sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>go to AlphaFold &#x1F517;</a>", $uniprot_name );
-$output->pdbfile   = sprintf( "<a target=_blank href=pdb/%s_blah.pdb>PDB file &#x21D3;</a>", $found->name );
-$output->prfile    = sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) file &#x21D3;</a>", $found->name );
+$output->downloads = 
+    sprintf( "<a target=_blank href=pdb/%s_blah.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
+    . sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->_id )
+    . sprintf( "<a target=_blank href=csv/%s.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->_id )
+    ;
 
 ## log results to textarea
 

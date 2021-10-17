@@ -21,27 +21,16 @@
         }
         ,{
             "role"   : "output"
-            ,"id"    : "uniprot"
-            ,"label" : ""
-            ,"type"  : "html"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "alphafold"
-            ,"label" : ""
-            ,"type"  : "html"
-        }
-        ,{
-            "role"   : "output"
             ,"id"    : "name"
-            ,"label" : "Model name"
+            ,"label" : "AlphaFold Model name"
             ,"type"  : "text"
         }
         ,{
             "role"   : "output"
             ,"id"    : "source"
             ,"label" : "Source"
-            ,"type"  : "text"
+            ,"rows"  : 3
+            ,"type"  : "textarea"
         }
         ,{
             "role"   : "output"
@@ -118,14 +107,14 @@
         }
         ,{
             "role"   : "output"
-            ,"id"    : "pdbfile"
-            ,"label" : "PDB file"
+            ,"id"    : "links"
+            ,"label" : "External links"
             ,"type"  : "html"
         }
         ,{
             "role"   : "output"
-            ,"id"    : "prfile"
-            ,"label" : "P(r) data"
+            ,"id"    : "downloads"
+            ,"label" : "Downloads"
             ,"type"  : "html"
         }
         ,{
