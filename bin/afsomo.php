@@ -25,7 +25,7 @@ $output = (object)[];
 
 ## process inputs here to produce output
 
-require '/var/www/html/somoaf/vendor/autoload.php'; // include Composer's autoloader
+require '/var/www/html/somoaf/vendor/autoload.php'; ## include Composer's autoloader
 
 ### convience functions
 function json_exit() {
@@ -33,6 +33,47 @@ function json_exit() {
     echo json_encode( $output );
     exit;
 }    
+
+function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
+    global $input;
+    global $output;
+
+    $result = (object)[];
+    $msg    = (object)[];
+    $msg->_uuid   = $input->_uuid;
+    $msg->timeout = $timeout;
+
+    if ( is_string( $question ) ) {
+        $msg->_question = json_decode( $question );
+    } else if ( is_object( $question ) ) {
+        $msg->_question = $question;
+    } else if ( is_array( $question ) ) {
+        $msg->_question = (object)$question; ### json_decode( json_encode( $question ) );
+    } else {
+        $result->error = 'question must be a json string, array or object';
+        return $result;
+    }
+        
+    $msgj = json_encode( $msg );
+    # a newline is also required when sending a question
+    $msgj .= "\n";
+        
+    $output->msgjson = $msgj;
+
+    # connect
+    $socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
+    socket_connect( $socket, $input->_tcphost, $input_tcpport );
+
+    # send question
+
+    socket_send( $socket, $msgj, strlen( $msgj ) );
+
+    # receive answer
+
+    $data = socket_read( $socket, $buffersize, PHP_NORMAL_READ );
+    socket_close( $socket );
+    return $data;
+}
 
 ### open db
 
@@ -55,6 +96,35 @@ if ( !$found ) {
     $output->_textarea = "Not found";
     json_exit();
 }
+
+### tcp message test
+
+$response =
+    tcpquestion(
+        [
+         "id" => "q1"
+         ,"title" => "are you sure?"
+         ,"text" => "<p>header text.</p><hr>"
+         ,"fields" => [
+             [
+              "id" => "l1"
+              ,"type" => "label"
+              ,"label" => "<center>this is label text</center>"
+             ]
+             ,[
+                 "id" => "t1"
+                 ,"type" => "text"
+                 ,"label" => "tell me your name:"
+             ]
+             ,[
+                 "id" => "cb1"
+                 ,"type" => "checkbox"
+                 ,"label" => "are you sure about the speed of light?"
+             ]
+         ]
+        ] );
+
+$output->response = json_encode( $response );
 
 ### map outputs
 
@@ -80,9 +150,10 @@ $output->ExtX      = sprintf( "%.3g", $found->ExtX );
 $output->ExtY      = sprintf( "%.3g", $found->ExtY );
 $output->ExtZ      = sprintf( "%.3g", $found->ExtZ );
 $output->downloads = 
-    sprintf( "<a target=_blank href=pdb/%s_blah.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
-    . sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->_id )
-    . sprintf( "<a target=_blank href=csv/%s.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->_id )
+    sprintf( "<a target=_blank href=pdb/%s_blah.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",      $found->_id )
+    . sprintf( "<a target=_blank href=cif/%s_blah.pdb>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
+    . sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
+    . sprintf( "<a target=_blank href=csv/%s.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->_id )
     ;
 
 ## log results to textarea

@@ -31,6 +31,7 @@
             ,"label" : "Source"
             ,"rows"  : 3
             ,"type"  : "textarea"
+            ,"help"  : "This information is as reported in the AlphaFold PDB SOURCE information"
         }
         ,{
             "role"   : "output"
@@ -84,38 +85,44 @@
         ,{
             "role"   : "output"
             ,"id"    : "Rg"
-            ,"label" : "Radius of gyration (+r) [A] (from PDB atomic structure)"
+            ,"label" : "Radius of gyration (+r) [A]"
             ,"type"  : "text"
+            ,"help"  : "The radius of gyration is computed on the atomic structure"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtX"
             ,"label" : "Maximum extensions X [nm]"
             ,"type"  : "text"
+            ,"help"  : "The principle axis aligned X dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtY"
             ,"label" : "Maximum extensions Y [nm]"
             ,"type"  : "text"
+            ,"help"  : "The principle axis aligned Y dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtZ"
             ,"label" : "Maximum extensions Z [nm]"
             ,"type"  : "text"
+            ,"help"  : "The principle axis aligned Z dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "links"
             ,"label" : "External links"
             ,"type"  : "html"
+            ,"help"  : "Links to external sites"
         }
         ,{
             "role"   : "output"
             ,"id"    : "downloads"
             ,"label" : "Downloads"
             ,"type"  : "html"
+            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present) & SS bonds annotated"
         }
         ,{
             "role"   : "output"
