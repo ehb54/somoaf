@@ -34,6 +34,71 @@ function json_exit() {
     exit;
 }    
 
+function tcpmessage( $message ) {
+    global $input;
+    global $output;
+    $result = (object)[];
+    $msg    = (object)[];
+    $msg->_uuid   = $input->_uuid;
+
+    if ( is_string( $message ) ) {
+        $msg->_message = json_decode( $message );
+    } else if ( is_object( $message ) ) {
+        $msg->_message = $message;
+    } else if ( is_array( $message ) ) {
+        $msg->_message = (object)$message;
+    } else {
+        $result->error = 'message must be a json string, array or object';
+        return $result;
+    }
+
+    $msgj = utf8_encode( json_encode( $msg ) );
+
+    $output->_textarea = "message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
+
+    # open socket
+    $socket = socket_create( AF_INET, SOCK_STREAM, 0 );
+    socket_connect( $socket, $input->_tcphost, intval( $input->_tcpport ) );
+
+    # send message
+
+    socket_send( $socket, utf8_encode( $msgj ), strlen( $msgj ) );
+    socket_close( $socket );
+    return "ok";
+}
+
+function udpmessage( $message ) {
+    global $input;
+    global $output;
+    $result = (object)[];
+    $msg    = (object)[];
+    $msg->_uuid   = $input->_uuid;
+
+    if ( is_string( $message ) ) {
+        $msg->_message = json_decode( $message );
+    } else if ( is_object( $message ) ) {
+        $msg->_message = $message;
+    } else if ( is_array( $message ) ) {
+        $msg->_message = (object)$message;
+    } else {
+        $result->error = 'message must be a json string, array or object';
+        return $result;
+    }
+
+    $msgj = utf8_encode( json_encode( $msg ) );
+
+    $output->_textarea = "udp message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
+
+    # open socket
+    $socket = socket_create( AF_INET, SOCK_DGRAM, 0 );
+
+    # send message
+
+    socket_sendto( $socket, $msgj, strlen( $msgj ), 0, $input->_udphost, intval( $input->_udpport ) );
+
+    return "ok";
+}
+
 function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     global $input;
     global $output;
@@ -48,21 +113,21 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     } else if ( is_object( $question ) ) {
         $msg->_question = $question;
     } else if ( is_array( $question ) ) {
-        $msg->_question = (object)$question; ### json_decode( json_encode( $question ) );
+        $msg->_question = (object)$question;
     } else {
         $result->error = 'question must be a json string, array or object';
         return $result;
     }
         
-    $msgj = json_encode( $msg );
+    $msgj = utf8_encode( json_encode( $msg ) );
     # a newline is also required when sending a question
     $msgj .= "\n";
         
-    $output->msgjson = $msgj;
+    $output->_textarea = "question:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
 
     # connect
     $socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
-    socket_connect( $socket, $input->_tcphost, $input_tcpport );
+    socket_connect( $socket, $input->_tcphost, $input->_tcpport );
 
     # send question
 
@@ -99,6 +164,7 @@ if ( !$found ) {
 
 ### tcp message test
 
+if ( 0 ) {
 $response =
     tcpquestion(
         [
@@ -124,7 +190,12 @@ $response =
          ]
         ] );
 
-$output->response = json_encode( $response );
+$output->response = json_encode( $result );
+}
+
+# $result = tcpmessage( '{"text":"hi there tcp"}' );
+$result = udpmessage( '{"text":"hi there udp"}' );
+$output->response = json_encode( $result );
 
 ### map outputs
 
