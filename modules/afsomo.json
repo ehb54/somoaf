@@ -1,9 +1,9 @@
 {
     "moduleid"      : "afsomo"
     ,"label"        : "US-SOMO AlphaFold Hydrodynamic Calculations"
-    ,"executable"   : "afsomo"
+    ,"executable"   : "afsomo.php"
     ,"submitpolicy" : "all"
-    ,"nosubmit"     : "true"
+    ,"submit_label" : "Search"
     ,"noreset"      : "true"
     ,"fields" : [
         {
@@ -15,9 +15,21 @@
         ,{
             "role"   : "input"
             ,"id"     : "searchkey"
-            ,"label"  : "Search"
+            ,"label"  : "UniProt accession"
             ,"type"   : "text"
             ,"maxlen" : 30
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "uniprot"
+            ,"label" : ""
+            ,"type"  : "html"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "alphafold"
+            ,"label" : ""
+            ,"type"  : "html"
         }
         ,{
             "role"   : "output"
@@ -36,6 +48,7 @@
             ,"id"    : "sp"
             ,"label" : "Signal protein cut"
             ,"type"  : "text"
+            ,"help"  : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations"
         }
         ,{
             "role"   : "output"
@@ -63,20 +76,8 @@
         }
         ,{
             "role"   : "output"
-            ,"id"    : "S_sd"
-            ,"label" : "Sedimentation coefficient s.d."
-            ,"type"  : "text"
-        }
-        ,{
-            "role"   : "output"
             ,"id"    : "Dtr"
             ,"label" : "Translational diffusion coefficient D [cm/sec^2]"
-            ,"type"  : "text"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Dtr_sd"
-            ,"label" : "Translational diffusion coefficient D s.d."
             ,"type"  : "text"
         }
         ,{
@@ -87,20 +88,8 @@
         }
         ,{
             "role"   : "output"
-            ,"id"    : "Rs_sd"
-            ,"label" : "Stokes radius s.d."
-            ,"type"  : "text"
-        }
-        ,{
-            "role"   : "output"
             ,"id"    : "Eta"
             ,"label" : "Intrinsic viscosity [cm^3/g]"
-            ,"type"  : "text"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Eta_sd"
-            ,"label" : "Intrisic viscosity s.d."
             ,"type"  : "text"
         }
         ,{
@@ -131,13 +120,13 @@
             "role"   : "output"
             ,"id"    : "pdbfile"
             ,"label" : "PDB file"
-            ,"type"  : "file"
+            ,"type"  : "html"
         }
         ,{
             "role"   : "output"
             ,"id"    : "prfile"
             ,"label" : "P(r) data"
-            ,"type"  : "file"
+            ,"type"  : "html"
         }
         ,{
             "role"   : "output"
