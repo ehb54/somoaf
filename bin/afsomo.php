@@ -57,12 +57,21 @@ function tcpmessage( $message ) {
     $output->_textarea = "message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
 
     # open socket
-    $socket = socket_create( AF_INET, SOCK_STREAM, 0 );
-    socket_connect( $socket, $input->_tcphost, intval( $input->_tcpport ) );
+    if ( !($socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) ) {
+        $result->error = 'socket create error : ' . socket_strerror( socket_last_error() );
+        return $result;
+    }
+    if ( !socket_connect( $socket, $input->_tcphost, intval( $input->_tcpport ) ) ) {
+        $result->error = 'socket connect error : ' . socket_strerror( socket_last_error() );
+        return $result;
+    }
 
     # send message
 
-    socket_send( $socket, utf8_encode( $msgj ), strlen( $msgj ) );
+    if ( strlen( $msgj ) != ( $bytes_sent = socket_write( $socket, $msgj, strlen( $msgj ) ) ) ) {
+        $result->error = "socket send error bytes sent : $bytes_sent : " . socket_strerror( socket_last_error() );
+        return $result;
+    }
     socket_close( $socket );
     return "ok";
 }
@@ -123,19 +132,31 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     # a newline is also required when sending a question
     $msgj .= "\n";
         
-    $output->_textarea = "question:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
+    $output->_textarea = "question:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT ) . "\n";
 
     # connect
-    $socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
-    socket_connect( $socket, $input->_tcphost, $input->_tcpport );
+    if ( !($socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) ) {
+        $result->error = 'socket create error : ' . socket_strerror( socket_last_error() );
+        return $result;
+    }
+    if ( !socket_connect( $socket, $input->_tcphost, intval( $input->_tcpport ) ) ) {
+        $result->error = 'socket connect error : ' . socket_strerror( socket_last_error() );
+        return $result;
+    }
 
     # send question
 
-    socket_send( $socket, $msgj, strlen( $msgj ) );
+    if ( strlen( $msgj ) != ( $bytes_sent = socket_write( $socket, $msgj, strlen( $msgj ) ) ) ) {
+        $result->error = "socket send error bytes sent = $bytes_sent : " . socket_strerror( socket_last_error() );
+        return $result;
+    }
 
     # receive answer
 
-    $data = socket_read( $socket, $buffersize, PHP_NORMAL_READ );
+    $data = socket_read( $socket, $buffersize );
+
+    $output->_textarea .= "question response:\n" . json_encode( json_decode( $data ), JSON_PRETTY_PRINT ) . "\n";
+
     socket_close( $socket );
     return $data;
 }
@@ -164,7 +185,6 @@ if ( !$found ) {
 
 ### tcp message test
 
-if ( 0 ) {
 $response =
     tcpquestion(
         [
@@ -190,12 +210,11 @@ $response =
          ]
         ] );
 
-$output->response = json_encode( $result );
-}
 
 # $result = tcpmessage( '{"text":"hi there tcp"}' );
-$result = udpmessage( '{"text":"hi there udp"}' );
-$output->response = json_encode( $result );
+# $result = udpmessage( '{"text":"hi there udp"}' );
+
+$output->response = json_encode( json_decode( $response ), JSON_PRETTY_PRINT );
 
 ### map outputs
 
