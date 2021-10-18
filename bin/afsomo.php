@@ -328,6 +328,8 @@ $output->downloads =
     . sprintf( "<a target=_blank href=cif/%s_blah.pdb>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
     . sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
     . sprintf( "<a target=_blank href=csv/%s.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->_id )
+    . sprintf( "<a target=_blank href=zip/%s.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
+    . sprintf( "<a target=_blank href=txz/%s.zip>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
     ;
 
 ## log results to textarea

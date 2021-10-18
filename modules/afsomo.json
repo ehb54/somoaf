@@ -122,7 +122,7 @@
             ,"id"    : "downloads"
             ,"label" : "Downloads"
             ,"type"  : "html"
-            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present) & SS bonds annotated"
+            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present) & SS bonds annotated<br>All zip&apos;d - zip archive of all<br>All txz&apos;d - tar xz archive of all"
         }
         ,{
             "role"   : "output"
