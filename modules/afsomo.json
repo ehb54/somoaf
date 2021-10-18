@@ -29,7 +29,7 @@
             "role"   : "output"
             ,"id"    : "source"
             ,"label" : "Source"
-            ,"rows"  : 3
+            ,"rows"  : 5
             ,"type"  : "textarea"
             ,"help"  : "This information is as reported in the AlphaFold PDB SOURCE information"
         }

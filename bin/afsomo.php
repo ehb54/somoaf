@@ -227,11 +227,13 @@ if ( count( $ids ) > 1 ) {
             tcpquestion(
                 [
                  "id" => "q1"
-                 ,"title" => "Multiple matches found"
+                 ,"title" => "Multiple search results found"
+                 ,"icon"  => "noicon.png"
                  ,"text" =>
-                 "There are multiple results in the database matching your search<br>"
-                 . "(Note - these results are limited to a maximum of $MAX_RESULTS)<br>"
+                 "There are multiple results in the database<br>"
+                 . "(Note - maximum of $MAX_RESULTS matches listed)<br>"
                  . "<hr>"
+                 ,"grid" => 3
                  ,"fields" => [
                      [
                       "id" => "lb1"
@@ -239,7 +241,11 @@ if ( count( $ids ) > 1 ) {
                       ,"fontfamily" => "monospace"
                       ,"values"     => $ids
                       ,"returns"    => $ids
+                      ,"required"   => "true"
                       ,"size"       => count( $ids ) > $MAX_RESULTS_SHOWN ? $MAX_RESULTS_SHOWN : count( $ids )
+                      ,"grid"       => [
+                          "data"    => [1,3]
+                      ]
                      ]
                  ]
                 ]
@@ -261,6 +267,7 @@ if ( count( $ids ) > 1 ) {
         ) {
         $output->searchkey = $response->_response->lb1;
     } else {
+        $output->_null = "";
         json_exit();
     }
 } else {
