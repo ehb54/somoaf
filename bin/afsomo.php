@@ -25,6 +25,13 @@ $output = (object)[];
 
 ## process inputs here to produce output
 
+### user defines
+
+$MAX_RESULTS       = 25;
+$MAX_RESULTS_SHOWN = 10;
+
+### end user defines
+    
 require '/var/www/html/somoaf/vendor/autoload.php'; ## include Composer's autoloader
 
 ### convience functions
@@ -54,7 +61,7 @@ function tcpmessage( $message ) {
 
     $msgj = utf8_encode( json_encode( $msg ) );
 
-    $output->_textarea = "message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
+    # $output->_textarea = "message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
 
     # open socket
     if ( !($socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) ) {
@@ -96,7 +103,7 @@ function udpmessage( $message ) {
 
     $msgj = utf8_encode( json_encode( $msg ) );
 
-    $output->_textarea = "udp message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
+    # $output->_textarea = "udp message:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT );
 
     # open socket
     $socket = socket_create( AF_INET, SOCK_DGRAM, 0 );
@@ -115,7 +122,8 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     $result = (object)[];
     $msg    = (object)[];
     $msg->_uuid   = $input->_uuid;
-    $msg->timeout = $timeout;
+    # genapptest's appconfig has a default timeout
+    # $msg->timeout = $timeout;
 
     if ( is_string( $question ) ) {
         $msg->_question = json_decode( $question );
@@ -132,7 +140,7 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     # a newline is also required when sending a question
     $msgj .= "\n";
         
-    $output->_textarea = "question:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT ) . "\n";
+    # $output->_textarea = "question:\n" . json_encode( json_decode( $msgj ), JSON_PRETTY_PRINT ) . "\n";
 
     # connect
     if ( !($socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) ) {
@@ -155,7 +163,7 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
 
     $data = socket_read( $socket, $buffersize );
 
-    $output->_textarea .= "question response:\n" . json_encode( json_decode( $data ), JSON_PRETTY_PRINT ) . "\n";
+    # $output->_textarea .= "question response:\n" . json_encode( json_decode( $data ), JSON_PRETTY_PRINT ) . "\n";
 
     socket_close( $socket );
     return $data;
@@ -172,49 +180,118 @@ try {
 
 ### find in db
 try {
-    $found = $db_mongo->somo->afd->findOne( [ "_id" => $input->searchkey ] );
+    $query = [ '_id' => new \MongoDB\BSON\Regex( '^' . $input->searchkey, 'i' ) ];
+
+    # $output->_textarea = "query:\n" . json_encode( $query, JSON_PRETTY_PRINT ) . "\n";
+
+    $foundcursor = $db_mongo->somo->afd->find(
+        $query
+        ,[
+            'limit' => $MAX_RESULTS
+            ,'projection' => [
+                '_id' => 1
+            ]
+        ]
+        );
 } catch ( MongoDB\Exception\UnsupportedException $e ) {
+    $output->errors = "Error finding " .  $e->getMessage();
+    json_exit();
+} catch ( MongoDB\Exception\InvalidArgumentException $e ) {
+    $output->errors = "Error finding " .  $e->getMessage();
+    json_exit();
+} catch ( MongoDB\Exception\RuntimeException $e ) {
+    $output->errors = "Error finding " .  $e->getMessage();
+    json_exit();
+}
+
+$ids = [];
+foreach( $foundcursor as $doc ) {
+    $ids[] = $doc->_id;
+}
+
+if ( count( $ids ) == 0 ) {
+    $output->_message =
+        [
+         'text'  => $input->searchkey . ' did not match any records'
+         ,'icon' => 'information.png'
+        ];
+    json_exit();
+}
+
+# $output->_textarea .= "output ids:\n" . json_encode( $ids, JSON_PRETTY_PRINT ) . "\n";
+
+if ( count( $ids ) > 1 ) {
+
+    $response =
+        json_decode(
+            tcpquestion(
+                [
+                 "id" => "q1"
+                 ,"title" => "Multiple matches found"
+                 ,"text" =>
+                 "There are multiple results in the database matching your search<br>"
+                 . "(Note - these results are limited to a maximum of $MAX_RESULTS)<br>"
+                 . "<hr>"
+                 ,"fields" => [
+                     [
+                      "id" => "lb1"
+                      ,"type"       => "listbox"
+                      ,"fontfamily" => "monospace"
+                      ,"values"     => $ids
+                      ,"returns"    => $ids
+                      ,"size"       => count( $ids ) > $MAX_RESULTS_SHOWN ? $MAX_RESULTS_SHOWN : count( $ids )
+                     ]
+                 ]
+                ]
+                )
+            );
+
+
+    # $result = tcpmessage( '{"text":"hi there tcp"}' );
+    # $result = udpmessage( '{"text":"hi there udp"}' );
+
+    # $output->response = json_encode( $response, JSON_PRETTY_PRINT );
+
+    if (
+        isset( $response->_response )
+        && isset( $response->_response->button )
+        && $response->_response->button == "ok"
+        && isset( $response->_response->lb1 )
+        && strlen( $response->_response->lb1 )
+        ) {
+        $output->searchkey = $response->_response->lb1;
+    } else {
+        json_exit();
+    }
+} else {
+    ## one entry, set the searchkey to the full _id
+    $output->searchkey = $ids[ 0 ];
+}
+
+try {
+    $found = $db_mongo->somo->afd->findOne( [ "_id" => $output->searchkey ] );
+} catch ( MongoDB\Exception\UnsupportedException $e ) {
+    $output->errors = "Error finding " .  $e->getMessage();
+    json_exit();
+} catch ( MongoDB\Exception\InvalidArgumentException $e ) {
+    $output->errors = "Error finding " .  $e->getMessage();
+    json_exit();
+} catch ( MongoDB\Exception\RuntimeException $e ) {
     $output->errors = "Error finding " .  $e->getMessage();
     json_exit();
 }
 
 if ( !$found ) {
-    $output->_textarea = "Not found";
+    $output->_message =
+        [
+         'text'  => $output->searchkey . ' did not match any records'
+         ,'icon' => 'information.png'
+        ];
     json_exit();
 }
 
-### tcp message test
-
-$response =
-    tcpquestion(
-        [
-         "id" => "q1"
-         ,"title" => "are you sure?"
-         ,"text" => "<p>header text.</p><hr>"
-         ,"fields" => [
-             [
-              "id" => "l1"
-              ,"type" => "label"
-              ,"label" => "<center>this is label text</center>"
-             ]
-             ,[
-                 "id" => "t1"
-                 ,"type" => "text"
-                 ,"label" => "tell me your name:"
-             ]
-             ,[
-                 "id" => "cb1"
-                 ,"type" => "checkbox"
-                 ,"label" => "are you sure about the speed of light?"
-             ]
-         ]
-        ] );
-
-
-# $result = tcpmessage( '{"text":"hi there tcp"}' );
-# $result = udpmessage( '{"text":"hi there udp"}' );
-
-$output->response = json_encode( json_decode( $response ), JSON_PRETTY_PRINT );
+# $output->_textarea .= "output:\n" . json_encode( $output, JSON_PRETTY_PRINT ) . "\n";
+# $output->_textarea .= "found:\n" . json_encode( $found, JSON_PRETTY_PRINT ) . "\n";
 
 ### map outputs
 
