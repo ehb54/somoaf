@@ -1,7 +1,7 @@
 # this is a project directives file
 # comments are ok but must start the line in this JSON
 {
-  "title"                     : "US-SOMO Hydrodynamics",
+  "title"                     : "US-SOMO Online",
 
 # "somoaf" below could be replaced, but you should probably also then replace "somoaf" in the paths below
 # the application name should not contain any special characters
@@ -10,7 +10,7 @@
   "footer"                    : "Supported by NIH-GM120600, NSF-1912444",
   "footersize"                : "50px",
 
-  "version"                   : "0.1",
+  "version"                   : "",
 # choose your target languages to generate currently from [ "html5", "qt3", "qt4", "qt5", "java" ]
     "languages"                 : [ "html5" ],
 

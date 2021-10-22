@@ -222,6 +222,12 @@ if ( count( $ids ) == 0 ) {
 
 if ( count( $ids ) > 1 ) {
 
+    if ( count( $ids ) == $MAX_RESULTS ) {
+        $multiple_msg = "<i>Note - results are limited to $MAX_RESULTS, more matches may exist.<br>Use a longer search string to refine the results.</i><br>";
+    } else {
+        $multiple_msg = "";
+    }
+
     $response =
         json_decode(
             tcpquestion(
@@ -231,9 +237,10 @@ if ( count( $ids ) > 1 ) {
                  ,"icon"  => "noicon.png"
                  ,"text" =>
                  "There are multiple results in the database<br>"
-                 . "(Note - maximum of $MAX_RESULTS matches listed)<br>"
+                 . $multiple_msg
                  . "<hr>"
                  ,"grid" => 3
+                 ,"timeouttext" => "The time to respond has expired, please search again."
                  ,"fields" => [
                      [
                       "id" => "lb1"
@@ -323,19 +330,91 @@ $output->Rg        = sprintf( "%.3g", $found->Rg );
 $output->ExtX      = sprintf( "%.3g", $found->ExtX );
 $output->ExtY      = sprintf( "%.3g", $found->ExtY );
 $output->ExtZ      = sprintf( "%.3g", $found->ExtZ );
+$output->helix     = sprintf( "%.3g", $found->helix );
+$output->sheet     = sprintf( "%.3g", $found->sheet );
 $output->downloads = 
-    sprintf( "<a target=_blank href=pdb/%s_blah.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",      $found->_id )
-    . sprintf( "<a target=_blank href=cif/%s_blah.pdb>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
-    . sprintf( "<a target=_blank href=pr/%s_blah.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->_id )
-    . sprintf( "<a target=_blank href=csv/%s.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->_id )
-    . sprintf( "<a target=_blank href=zip/%s.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
-    . sprintf( "<a target=_blank href=txz/%s.zip>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->_id )
+    sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
+    . sprintf( "<a target=_blank href=data/cif/%s-somo.cif>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",         $found->name )
+    . sprintf( "<a target=_blank href=data/pr/%s-somo.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",         $found->name )
+    . sprintf( "<a target=_blank href=data/csv/%s-somo.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->name )
+    . sprintf( "<a target=_blank href=data/zip/%s-somo.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->name )
+    . sprintf( "<a target=_blank href=data/txz/%s-somo.txz>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->name )
     ;
 
+## pdb
+$output->struct = sprintf( "data/pdb/%s-somo.pdb", $found->name );
+
+## plotly
+
+$plotfile = sprintf( "/var/www/html/somoaf/data/pr/%s-somo.dat", $found->name );
+if ( file_exists( $plotfile ) ) {
+    if ( $plotfiledata = file_get_contents( $plotfile ) ) {
+        $plotin = explode( "\n", $plotfiledata );
+        $plot = json_decode(
+            '{
+                "data" : [
+                    {
+                     "x"     : []
+                     ,"y"    : []
+                     ,"mode" : "lines"
+                     ,"line" : {
+                         "color"  : "rgb(150,150,222)"
+                         ,"width" : 2
+                      }
+                    }
+                 ]
+                 ,"layout" : {
+                    "title" : "P(r)"
+                    ,"font" : {
+                        "color"  : "rgb(233,222,222)"
+                    }
+                    ,"paper_bgcolor": "rgba(0,0,0,0)"
+                    ,"plot_bgcolor": "rgba(0,0,0,0)"
+                    ,"xaxis" : {
+                    "title" : {
+                       "text" : "Distance [&#8491;]"
+                        ,"font" : {
+                            "color"  : "rgb(233,222,222)"
+                        }
+                     }
+                    }
+                    ,"yaxis" : {
+                    "title" : {
+                       "text" : "Frequency"
+                        ,"color"  : "rgb(233,222,222)"
+                        ,"font" : {
+                            "color"  : "rgb(233,222,222)"
+                        }
+                     }
+                    }
+                 }
+            }'
+            );
+
+        ## first two lines are headers
+        array_shift( $plotin );
+        array_shift( $plotin );
+
+        ## $plot->plotincount = count( $plotin );
+        
+        foreach ( $plotin as $linein ) {
+            $linevals = explode( "\t", $linein );
+
+            if ( count( $linevals ) == 3 ) {
+                $plot->data[0]->x[] = floatval($linevals[0]);
+                $plot->data[0]->y[] = floatval($linevals[2]);
+            }
+        }
+            
+        $output->prplot = $plot;
+    }
+}
+    
 ## log results to textarea
 
-# $output->_textarea =  "JSON output from executable:\n" . json_encode( $output, JSON_PRETTY_PRINT ) . "\n";
+# $output->_textarea .=  "JSON output from executable:\n" . json_encode( $output, JSON_PRETTY_PRINT ) . "\n";
 # $output->_textarea .= "JSON input from executable:\n"  . json_encode( $input, JSON_PRETTY_PRINT )  . "\n";
+
 
 json_exit();
 

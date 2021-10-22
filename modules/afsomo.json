@@ -18,6 +18,7 @@
             ,"label"  : "UniProt accession"
             ,"type"   : "text"
             ,"maxlen" : 30
+            ,"help"   : "Enter an AlphaFold predicted UniProt acession code or the start of a code and click Search"
         }
         ,{
             "role"   : "output"
@@ -94,21 +95,35 @@
             ,"id"    : "ExtX"
             ,"label" : "Maximum extensions X [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned X dimension"
+            ,"help"  : "The principle axis aligned maximum extension in the X dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtY"
             ,"label" : "Maximum extensions Y [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned Y dimension"
+            ,"help"  : "The principle axis aligned maximum extension in the Y dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtZ"
             ,"label" : "Maximum extensions Z [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned Z dimension"
+            ,"help"  : "The principle axis aligned maximum extension in the Z dimension"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "helix"
+            ,"label" : "% Helix"
+            ,"type"  : "text"
+            ,"help"  : "The percent of peptide bonds identified by Chimera as &alpha;-Helix"
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "sheet"
+            ,"label" : "% Sheet"
+            ,"type"  : "text"
+            ,"help"  : "The percent of peptide bonds identified by Chimera as &beta;-Sheet"
         }
         ,{
             "role"   : "output"
@@ -122,13 +137,21 @@
             ,"id"    : "downloads"
             ,"label" : "Downloads"
             ,"type"  : "html"
-            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present) & SS bonds annotated<br>All zip&apos;d - zip archive of all<br>All txz&apos;d - tar xz archive of all"
+            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive of all<br>All txz&apos;d - tar xz archive of all"
         }
         ,{
             "role"   : "output"
             ,"id"    : "prplot"
             ,"type"  : "plotly"
             ,"label" : ""
+        }
+        ,{
+            "role"   : "output"
+            ,"id"    : "struct"
+            ,"type"  : "atomicstructure"
+            ,"label" : ""
+            ,"width" : "600"
+            ,"jsmoladd" : "ribbon only; color structure"
         }
     ]
 }
