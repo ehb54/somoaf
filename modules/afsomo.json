@@ -1,166 +1,365 @@
 {
-    "moduleid"      : "afsomo"
-    ,"label"        : "US-SOMO AlphaFold Hydrodynamic Calculations"
-    ,"executable"   : "afsomo.php"
-    ,"submitpolicy" : "all"
-    ,"submit_label" : "Search"
-    ,"noreset"      : "true"
-    ,"fields" : [
+    "submitpolicy" : "all",
+    "label" : "US-SOMO AlphaFold Hydrodynamic Database",
+    "noreset" : "true",
+    "moduleid" : "afsomo",
+    "executable" : "afsomo.php",
+    "panels" : [
         {
-            "role"   : "input"
-            ,"id"    : "label_0"
-            ,"type"  : "label"
-            ,"label" : "<center><big><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Hydrodynamic Calculations</big></center>"
+            "root" : {
+                "label" : [
+                    1,
+                    1
+                ],
+                "data" : [
+                    1,
+                    2
+                ],
+                "gap" : "1px",
+                "align" : "left",
+                "size" : [
+                    1,
+                    "auto"
+                ]
+            }
+        },
+        {
+            "header" : {
+                "data" : [
+                    2,
+                    1
+                ],
+                "label" : [
+                    1,
+                    1
+                ],
+                "align" : "center",
+                "gap" : "1px",
+                "size" : [
+                    "auto",
+                    "auto"
+                ],
+                "location" : [
+                    "next",
+                    "full"
+                ]
+            }
+        },
+        {
+            "body" : {
+                "location" : [
+                    "next",
+                    "full"
+                ],
+                "size" : [
+                    "auto",
+                    [
+                        1,
+                        1
+                    ]
+                ]
+            }
+        },
+        {
+            "footer" : {
+                "align" : "center",
+                "size" : [
+                    "auto",
+                    "auto"
+                ],
+                "location" : [
+                    "next",
+                    "full"
+                ],
+                "data" : [
+                    2,
+                    1
+                ],
+                "label" : [
+                    1,
+                    1
+                ]
+            }
+        },
+        {
+            "inputpanel" : {
+                "parent" : "body",
+                "location" : [
+                    "next",
+                    "full"
+                ],
+                "align" : "left",
+                "size" : [
+                    "auto",
+                    [1,1]
+                ]
+            }
+        },
+        {
+            "resultpanel" : {
+                "align" : "left",
+                "size" : [
+                    "auto",
+                    [ 1, 1 ]
+                ],
+                "location" : [
+                    "next",
+                    "full"
+                ],
+                "data" : [
+                    1,
+                    2
+                ],
+                "parent" : "body",
+                "repeats" : {
+                    "indent" : "10px"
+                },
+                "label" : [
+                    1,
+                    1
+                ]
+            }
         }
-        ,{
-            "role"   : "input"
-            ,"id"     : "searchkey"
-            ,"label"  : "UniProt accession"
-            ,"type"   : "text"
-            ,"maxlen" : 30
-            ,"help"   : "Enter an AlphaFold predicted UniProt acession code or the start of a code and click Search"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "name"
-            ,"label" : "AlphaFold Model name"
-            ,"type"  : "text"
-            ,"help"  : "This is the full name from the AlphaFold database"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "source"
-            ,"label" : "Source"
-            ,"rows"  : 5
-            ,"type"  : "textarea"
-            ,"help"  : "As reported in the AlphaFold PDB SOURCE information"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "sp"
-            ,"label" : "Signal peptides removed"
-            ,"type"  : "text"
-            ,"help"  : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations<br>N.B. All results are computed with these residues removed."
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "afdate"
-            ,"label" : "AlphaFold date"
-            ,"type"  : "text"
-            ,"help"  : "The date from the structure in the AlphaFold database"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "mw"
-            ,"label" : "Molecular mass [Da]"
-            ,"type"  : "text"
-            ,"help"  : "The atomic mass"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "psv"
-            ,"label" : "Partial specific volume [cm^3/g]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the sequence"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "S"
-            ,"label" : "Sedimentation coefficient s [S]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the translational diffusion coefficient and is sensitive to the partial specific volume"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Dtr"
-            ,"label" : "Translational diffusion coefficient D [cm/sec^2]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the hydrated structure"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Rs"
-            ,"label" : "Stokes radius [nm]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the translational diffusion coefficient"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Eta"
-            ,"label" : "Intrinsic viscosity [cm^3/g]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the hydrated structure"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "Rg"
-            ,"label" : "Radius of gyration (+r) [A]"
-            ,"type"  : "text"
-            ,"help"  : "Computed from the atomic structure"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "ExtX"
-            ,"label" : "Maximum extensions X [nm]"
-            ,"type"  : "text"
-            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the X dimension"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "ExtY"
-            ,"label" : "Maximum extensions Y [nm]"
-            ,"type"  : "text"
-            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the Y dimension"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "ExtZ"
-            ,"label" : "Maximum extensions Z [nm]"
-            ,"type"  : "text"
-            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the Z dimension"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "helix"
-            ,"label" : "% Helix"
-            ,"type"  : "text"
-            ,"help"  : "The percent of peptide bonds identified by Chimera as &alpha;-Helix"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "sheet"
-            ,"label" : "% Sheet"
-            ,"type"  : "text"
-            ,"help"  : "The percent of peptide bonds identified by Chimera as &beta;-Sheet"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "links"
-            ,"label" : "External links"
-            ,"type"  : "html"
-            ,"help"  : "Links to external sites"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "downloads"
-            ,"label" : "Downloads"
-            ,"type"  : "html"
-            ,"help"  : "Note - the PDB and CIF have signal peptides removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "prplot"
-            ,"type"  : "plotly"
-            ,"label" : ""
-            ,"help"  : "The SAS P(r) as computed on the structure"
-        }
-        ,{
-            "role"   : "output"
-            ,"id"    : "struct"
-            ,"type"  : "atomicstructure"
-            ,"label" : ""
-            ,"width" : "600"
-            ,"jsmoladd" : "ribbon only; color structure"
+    ],
+#    "submit_label" : "Search",
+    "fields" : [
+        {
+            "role" : "input",
+            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Hydrodynamic Calculations</h5>",
+            "type" : "label",
+            "id" : "label_0"
+            ,"margin"    : "30px"
+            ,"layout" : {
+                "parent" : "header"
+            }
+        },
+        {
+            "role" : "input",
+            "id" : "searchkey",
+            "help" : "Enter an AlphaFold predicted UniProt accession code or the start of a code and click Search",
+            "type" : "text",
+            "maxlen" : 30,
+            "label" : "UniProt accession"
+            ,"layout" : {
+                "parent" : "inputpanel"
+            }
+        },
+        {
+           "role"        : "input"
+           ,"id"         : "b_submit"
+           ,"type"       : "button"
+            ,"buttontext" : "Search"
+            ,"margin"    : "1px"
+           ,"layout"    : {
+               "parent"    : "inputpanel"
+#               ,"location" : [ row, column ] (optional - defaults to [ "next", "next" ] )
+#               ,"label"    : [ row, column ] (optional - inherits )
+#               ,"data"     : [ row, column ] (optional - inherits )
+#               ,"align"    : "right"         (optional - inherits )
+#               ,"repeats"  : {}              (optional - inherits - only used for repeater fields)
+           }
+        },
+        {
+            "role" : "output",
+            "label" : "AlphaFold Model name",
+            "type" : "text",
+            "help" : "This is the full name from the AlphaFold database",
+            "id" : "name"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "help" : "As reported in the AlphaFold PDB SOURCE information",
+            "id" : "source",
+            "type" : "textarea",
+            "role" : "output",
+            "label" : "Source",
+            "rows" : 5
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "help" : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations<br>N.B. All results are computed with these residues removed.",
+            "id" : "sp",
+            "type" : "text",
+            "role" : "output",
+            "label" : "Signal peptides removed"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "help" : "The date from the structure in the AlphaFold database",
+            "id" : "afdate",
+            "type" : "text",
+            "label" : "AlphaFold date",
+            "role" : "output"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Molecular mass [Da]",
+            "role" : "output",
+            "id" : "mw",
+            "help" : "The atomic mass",
+            "type" : "text"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "id" : "psv",
+            "help" : "Computed from the sequence",
+            "type" : "text",
+            "role" : "output",
+            "label" : "Partial specific volume [cm^3/g]"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Sedimentation coefficient s [S]",
+            "role" : "output",
+            "type" : "text",
+            "help" : "Computed from the translational diffusion coefficient and is sensitive to the partial specific volume",
+            "id" : "S"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Translational diffusion coefficient D [cm/sec^2]",
+            "role" : "output",
+            "help" : "Computed from the hydrated structure",
+            "id" : "Dtr",
+            "type" : "text"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Stokes radius [nm]",
+            "role" : "output",
+            "type" : "text",
+            "help" : "Computed from the translational diffusion coefficient",
+            "id" : "Rs"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "type" : "text",
+            "help" : "Computed from the hydrated structure",
+            "id" : "Eta",
+            "label" : "Intrinsic viscosity [cm^3/g]",
+            "role" : "output"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "type" : "text",
+            "help" : "Computed from the atomic structure",
+            "id" : "Rg",
+            "role" : "output",
+            "label" : "Radius of gyration (+r) [A]"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Maximum extensions X [nm]",
+            "role" : "output",
+            "help" : "The principle axis aligned structure&apos;s maximum extension in the X dimension",
+            "type" : "text",
+            "id" : "ExtX"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "role" : "output",
+            "label" : "Maximum extensions Y [nm]",
+            "help" : "The principle axis aligned structure&apos;s maximum extension in the Y dimension",
+            "id" : "ExtY",
+            "type" : "text"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Maximum extensions Z [nm]",
+            "role" : "output",
+            "type" : "text",
+            "help" : "The principle axis aligned structure&apos;s maximum extension in the Z dimension",
+            "id" : "ExtZ"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "type" : "text",
+            "help" : "The percent of peptide bonds identified by Chimera as &alpha;-Helix",
+            "id" : "helix",
+            "label" : "% Helix",
+            "role" : "output"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "% Sheet",
+            "role" : "output",
+            "help" : "The percent of peptide bonds identified by Chimera as &beta;-Sheet",
+            "type" : "text",
+            "id" : "sheet"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "id" : "links",
+            "help" : "Links to external sites",
+            "type" : "html",
+            "label" : "External links",
+            "role" : "output"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Downloads",
+            "role" : "output",
+            "help" : "Note - the PDB and CIF have signal peptides removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model",
+            "id" : "downloads",
+            "type" : "html"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "role" : "output",
+            "label" : "",
+            "help" : "The SAS P(r) as computed on the structure",
+            "type" : "plotly",
+            "id" : "prplot"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "width" : "100%",
+            "label" : "",
+            "role" : "output",
+            "jsmoladd" : "ribbon only; color structure",
+            "id" : "struct",
+            "type" : "atomicstructure"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
         }
     ]
 }
