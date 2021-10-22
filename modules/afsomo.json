@@ -25,6 +25,7 @@
             ,"id"    : "name"
             ,"label" : "AlphaFold Model name"
             ,"type"  : "text"
+            ,"help"  : "This is the full name from the AlphaFold database"
         }
         ,{
             "role"   : "output"
@@ -32,84 +33,91 @@
             ,"label" : "Source"
             ,"rows"  : 5
             ,"type"  : "textarea"
-            ,"help"  : "This information is as reported in the AlphaFold PDB SOURCE information"
+            ,"help"  : "As reported in the AlphaFold PDB SOURCE information"
         }
         ,{
             "role"   : "output"
             ,"id"    : "sp"
-            ,"label" : "Signal protein cut"
+            ,"label" : "Signal peptides removed"
             ,"type"  : "text"
-            ,"help"  : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations"
+            ,"help"  : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations<br>N.B. All results are computed with these residues removed."
         }
         ,{
             "role"   : "output"
             ,"id"    : "afdate"
             ,"label" : "AlphaFold date"
             ,"type"  : "text"
+            ,"help"  : "The date from the structure in the AlphaFold database"
         }
         ,{
             "role"   : "output"
             ,"id"    : "mw"
             ,"label" : "Molecular mass [Da]"
             ,"type"  : "text"
+            ,"help"  : "The atomic mass"
         }
         ,{
             "role"   : "output"
             ,"id"    : "psv"
             ,"label" : "Partial specific volume [cm^3/g]"
             ,"type"  : "text"
+            ,"help"  : "Computed from the sequence"
         }
         ,{
             "role"   : "output"
             ,"id"    : "S"
             ,"label" : "Sedimentation coefficient s [S]"
             ,"type"  : "text"
+            ,"help"  : "Computed from the translational diffusion coefficient and is sensitive to the partial specific volume"
         }
         ,{
             "role"   : "output"
             ,"id"    : "Dtr"
             ,"label" : "Translational diffusion coefficient D [cm/sec^2]"
             ,"type"  : "text"
+            ,"help"  : "Computed from the hydrated structure"
         }
         ,{
             "role"   : "output"
             ,"id"    : "Rs"
             ,"label" : "Stokes radius [nm]"
             ,"type"  : "text"
+            ,"help"  : "Computed from the translational diffusion coefficient"
         }
         ,{
             "role"   : "output"
             ,"id"    : "Eta"
             ,"label" : "Intrinsic viscosity [cm^3/g]"
             ,"type"  : "text"
+            ,"help"  : "Computed from the hydrated structure"
         }
         ,{
             "role"   : "output"
             ,"id"    : "Rg"
             ,"label" : "Radius of gyration (+r) [A]"
             ,"type"  : "text"
-            ,"help"  : "The radius of gyration is computed on the atomic structure"
+            ,"help"  : "Computed from the atomic structure"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtX"
             ,"label" : "Maximum extensions X [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned maximum extension in the X dimension"
+            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the X dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtY"
             ,"label" : "Maximum extensions Y [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned maximum extension in the Y dimension"
+            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the Y dimension"
         }
         ,{
             "role"   : "output"
             ,"id"    : "ExtZ"
             ,"label" : "Maximum extensions Z [nm]"
             ,"type"  : "text"
-            ,"help"  : "The principle axis aligned maximum extension in the Z dimension"
+            ,"help"  : "The principle axis aligned structure&apos;s maximum extension in the Z dimension"
         }
         ,{
             "role"   : "output"
@@ -137,13 +145,14 @@
             ,"id"    : "downloads"
             ,"label" : "Downloads"
             ,"type"  : "html"
-            ,"help"  : "Note - the PDB and CIF have signal peptides cut (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive of all<br>All txz&apos;d - tar xz archive of all"
+            ,"help"  : "Note - the PDB and CIF have signal peptides removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model"
         }
         ,{
             "role"   : "output"
             ,"id"    : "prplot"
             ,"type"  : "plotly"
             ,"label" : ""
+            ,"help"  : "The SAS P(r) as computed on the structure"
         }
         ,{
             "role"   : "output"

@@ -236,8 +236,7 @@ if ( count( $ids ) > 1 ) {
                  ,"title" => "Multiple search results found"
                  ,"icon"  => "noicon.png"
                  ,"text" =>
-                 "There are multiple results in the database<br>"
-                 . $multiple_msg
+                 $multiple_msg
                  . "<hr>"
                  ,"grid" => 3
                  ,"timeouttext" => "The time to respond has expired, please search again."
