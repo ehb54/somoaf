@@ -3,7 +3,7 @@
         {
             "id"       : "lookup"
             ,"label"    : "Lookup"
-            ,"icon"     : "pngs/gears.png"
+            ,"icon"     : "pngs/somo.png"
             ,"autorun"  : "afsomo"
             ,"startup"  : "true"
 	    ,"modules"  : [

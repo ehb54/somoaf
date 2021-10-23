@@ -121,14 +121,13 @@
             }
         }
     ],
-#    "submit_label" : "Search",
     "fields" : [
         {
             "role" : "input",
-            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Hydrodynamic Calculations</h5>",
+            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://link.springer.com/article/10.1007%2Fs00249-018-1296-0>Hydrodynamic and Structural Calculations</a> on <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Predicted Structures</h5>",
             "type" : "label",
             "id" : "label_0"
-            ,"margin"    : "30px"
+            ,"marginbottom"    : "45px"
             ,"layout" : {
                 "parent" : "header"
             }
@@ -161,10 +160,21 @@
         },
         {
             "role" : "output",
-            "label" : "AlphaFold Model name",
+            "label" : "AlphaFold model name",
             "type" : "text",
             "help" : "This is the full name from the AlphaFold database",
             "id" : "name"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "help" : "As reported in the AlphaFold PDB TITLE information",
+            "id" : "title",
+            "type" : "textarea",
+            "role" : "output",
+            "label" : "Title",
+            "rows" : 3
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -185,7 +195,7 @@
             "id" : "sp",
             "type" : "text",
             "role" : "output",
-            "label" : "Signal peptides removed"
+            "label" : "Signal peptide removed"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -195,6 +205,16 @@
             "id" : "afdate",
             "type" : "text",
             "label" : "AlphaFold date",
+            "role" : "output"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "help" : "The date hydrodynamic and structural calculations were performed",
+            "id" : "somodate",
+            "type" : "text",
+            "label" : "Hydrodynamic & structural calculations date",
             "role" : "output"
             ,"layout" : {
                 "parent" : "resultpanel"
@@ -215,25 +235,15 @@
             "help" : "Computed from the sequence",
             "type" : "text",
             "role" : "output",
-            "label" : "Partial specific volume [cm^3/g]"
+            "label" : "Partial specific volume <b><i><span style=text-decoration:overline>&nu;<span></i></b> &nbsp;[cm<sup>3</sup>/g]"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
         },
         {
-            "label" : "Sedimentation coefficient s [S]",
+            "label" : "Translational diffusion coefficient <b><i>D<sup>0</sup><sub>20,w</sub></i></b> &nbsp;[F]",
             "role" : "output",
-            "type" : "text",
-            "help" : "Computed from the translational diffusion coefficient and is sensitive to the partial specific volume",
-            "id" : "S"
-            ,"layout" : {
-                "parent" : "resultpanel"
-            }
-        },
-        {
-            "label" : "Translational diffusion coefficient D [cm/sec^2]",
-            "role" : "output",
-            "help" : "Computed from the hydrated structure",
+            "help" : "Computed from the hydrated structure, [F] (Ficks) = 1e-7 [cm/sec<sup>2</sup>]",
             "id" : "Dtr",
             "type" : "text"
             ,"layout" : {
@@ -241,7 +251,17 @@
             }
         },
         {
-            "label" : "Stokes radius [nm]",
+            "label" : "Sedimentation coefficient <b><i>s<sup>0</sup><sub>20,w</sub></i></b> &nbsp;[S]",
+            "role" : "output",
+            "type" : "text",
+            "help" : "Computed from the translational diffusion coefficient, molecular mass and partial specific volume",
+            "id" : "S"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "label" : "Stokes radius <b><i>R<sub>S</sub></i></b> &nbsp;[nm]",
             "role" : "output",
             "type" : "text",
             "help" : "Computed from the translational diffusion coefficient",
@@ -254,7 +274,7 @@
             "type" : "text",
             "help" : "Computed from the hydrated structure",
             "id" : "Eta",
-            "label" : "Intrinsic viscosity [cm^3/g]",
+            "label" : "Intrinsic viscosity <b>[<i>&eta;</i>]</b> &nbsp;[cm<sup>3</sup>/g]",
             "role" : "output"
             ,"layout" : {
                 "parent" : "resultpanel"
@@ -265,7 +285,7 @@
             "help" : "Computed from the atomic structure",
             "id" : "Rg",
             "role" : "output",
-            "label" : "Radius of gyration (+r) [A]"
+            "label" : "Radius of gyration <b><i>R<sub>g</sub></i></b> &nbsp;[&#8491;]"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -302,7 +322,7 @@
         },
         {
             "type" : "text",
-            "help" : "The percent of peptide bonds identified by Chimera as &alpha;-Helix",
+            "help" : "The percent of peptide bonds identified by UCSF Chimera as &alpha;-Helix",
             "id" : "helix",
             "label" : "% Helix",
             "role" : "output"
@@ -313,7 +333,7 @@
         {
             "label" : "% Sheet",
             "role" : "output",
-            "help" : "The percent of peptide bonds identified by Chimera as &beta;-Sheet",
+            "help" : "The percent of peptide bonds identified by UCSF Chimera as &beta;-Sheet",
             "type" : "text",
             "id" : "sheet"
             ,"layout" : {
@@ -342,8 +362,8 @@
         },
         {
             "role" : "output",
-            "label" : "",
-            "help" : "The SAS P(r) as computed on the structure",
+            "label" : "SAXS P(r)",
+            "help" : "The P(r) is computed on the structure for comparison with SAXS derived data and is normalized by molecular mass",
             "type" : "plotly",
             "id" : "prplot"
             ,"layout" : {

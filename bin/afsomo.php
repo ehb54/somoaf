@@ -316,21 +316,23 @@ $output->links     =
     . sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>AlphaFold &#x1F517;</a>",             $uniprot_name )
     ;
 $output->name      = $found->name;
+$output->title     = str_replace( 'PREDICTION FOR ', "PREDICTION FOR\n", $found->title );
 $output->source    = str_replace( '; ', "\n", $found->source );
 $output->sp        = $found->sp ? $found->sp : "n/a";
 $output->afdate    = $found->afdate;
+$output->somodate  = $found->somodate;
 $output->mw        = sprintf( "%.1f", $found->mw );
 $output->psv       = $found->psv;
-$output->S         = sprintf( "%.5g +/- %.3g", $found->S,   $found->S_sd   );
-$output->Dtr       = sprintf( "%.5g +/- %.3g", $found->Dtr, $found->Dtr_sd );
-$output->Rs        = sprintf( "%.5g +/- %.3g", $found->Rs,  $found->Rs_sd  );
-$output->Eta       = sprintf( "%.5g +/- %.3g", $found->Eta, $found->Eta_sd );
+$output->S         = sprintf( "%.3g", $found->S );
+$output->Dtr       = sprintf( "%.3g", $found->Dtr * 1e7 );
+$output->Rs        = sprintf( "%.3g", $found->Rs );
+$output->Eta       = sprintf( "%.3g +/- %.2f", $found->Eta, $found->Eta_sd );
 $output->Rg        = sprintf( "%.3g", $found->Rg );
-$output->ExtX      = sprintf( "%.3g", $found->ExtX );
-$output->ExtY      = sprintf( "%.3g", $found->ExtY );
-$output->ExtZ      = sprintf( "%.3g", $found->ExtZ );
-$output->helix     = sprintf( "%.3g", $found->helix );
-$output->sheet     = sprintf( "%.3g", $found->sheet );
+$output->ExtX      = sprintf( "%.2f", $found->ExtX );
+$output->ExtY      = sprintf( "%.2f", $found->ExtY );
+$output->ExtZ      = sprintf( "%.2f", $found->ExtZ );
+$output->helix     = sprintf( "%.1f", $found->helix );
+$output->sheet     = sprintf( "%.1f", $found->sheet );
 $output->downloads = 
     sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
     . sprintf( "<a target=_blank href=data/cif/%s-somo.cif>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",         $found->name )
@@ -370,15 +372,18 @@ if ( file_exists( $plotfile ) ) {
                     ,"paper_bgcolor": "rgba(0,0,0,0)"
                     ,"plot_bgcolor": "rgba(0,0,0,0)"
                     ,"xaxis" : {
-                    "title" : {
+                       "gridcolor" : "rgba(233,222,222,0.5)"
+                       ,"title" : {
                        "text" : "Distance [&#8491;]"
+                        ,"gridcolor" : "rgb(111,111,111)"
                         ,"font" : {
                             "color"  : "rgb(233,222,222)"
                         }
                      }
                     }
                     ,"yaxis" : {
-                    "title" : {
+                       "gridcolor" : "rgba(233,222,222,0.5)"
+                       ,"title" : {
                        "text" : "Frequency"
                         ,"color"  : "rgb(233,222,222)"
                         ,"font" : {
