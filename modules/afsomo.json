@@ -4,6 +4,7 @@
     "noreset" : "true",
     "moduleid" : "afsomo",
     "executable" : "afsomo.php",
+    "hoverhighlight" : "true",
     "panels" : [
         {
             "root" : {
@@ -138,7 +139,8 @@
             "help" : "Enter an AlphaFold predicted UniProt accession code or the start of a code and click Search",
             "type" : "text",
             "maxlen" : 30,
-            "label" : "UniProt accession"
+            "label" : "UniProt accession",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "inputpanel"
             }
@@ -163,7 +165,8 @@
             "label" : "AlphaFold model name",
             "type" : "text",
             "help" : "This is the full name from the AlphaFold database",
-            "id" : "name"
+            "id" : "name",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -174,7 +177,8 @@
             "type" : "textarea",
             "role" : "output",
             "label" : "Title",
-            "rows" : 3
+            "rows" : 3,
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -185,7 +189,8 @@
             "type" : "textarea",
             "role" : "output",
             "label" : "Source",
-            "rows" : 5
+            "rows" : 5,
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -195,7 +200,8 @@
             "id" : "sp",
             "type" : "text",
             "role" : "output",
-            "label" : "Signal peptide removed"
+            "label" : "Signal peptide removed",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -205,7 +211,8 @@
             "id" : "afdate",
             "type" : "text",
             "label" : "AlphaFold date",
-            "role" : "output"
+            "role" : "output",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -215,7 +222,8 @@
             "id" : "somodate",
             "type" : "text",
             "label" : "Hydrodynamic & structural calculations date",
-            "role" : "output"
+            "role" : "output",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -225,7 +233,8 @@
             "role" : "output",
             "id" : "mw",
             "help" : "The atomic mass",
-            "type" : "text"
+            "type" : "text",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -235,7 +244,8 @@
             "help" : "Computed from the sequence",
             "type" : "text",
             "role" : "output",
-            "label" : "Partial specific volume <b><i><span style=text-decoration:overline>&nu;<span></i></b> &nbsp;[cm<sup>3</sup>/g]"
+            "label" : "Partial specific volume <b><i><span style=text-decoration:overline>&nu;<span></i></b> &nbsp;[cm<sup>3</sup>/g]",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -245,7 +255,8 @@
             "role" : "output",
             "help" : "Computed from the hydrated structure, [F] (Ficks) = 1e-7 [cm/sec<sup>2</sup>]",
             "id" : "Dtr",
-            "type" : "text"
+            "type" : "text",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -255,7 +266,8 @@
             "role" : "output",
             "type" : "text",
             "help" : "Computed from the translational diffusion coefficient, molecular mass and partial specific volume",
-            "id" : "S"
+            "id" : "S",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -265,7 +277,8 @@
             "role" : "output",
             "type" : "text",
             "help" : "Computed from the translational diffusion coefficient",
-            "id" : "Rs"
+            "id" : "Rs",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -275,7 +288,8 @@
             "help" : "Computed from the hydrated structure",
             "id" : "Eta",
             "label" : "Intrinsic viscosity <b>[<i>&eta;</i>]</b> &nbsp;[cm<sup>3</sup>/g]",
-            "role" : "output"
+            "role" : "output",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -285,7 +299,8 @@
             "help" : "Computed from the atomic structure",
             "id" : "Rg",
             "role" : "output",
-            "label" : "Radius of gyration <b><i>R<sub>g</sub></i></b> &nbsp;[&#8491;]"
+            "label" : "Radius of gyration <b><i>R<sub>g</sub></i></b> &nbsp;[&#8491;]",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -295,7 +310,8 @@
             "role" : "output",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the X dimension",
             "type" : "text",
-            "id" : "ExtX"
+            "id" : "ExtX",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -305,7 +321,8 @@
             "label" : "Maximum extensions Y [nm]",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the Y dimension",
             "id" : "ExtY",
-            "type" : "text"
+            "type" : "text",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -315,7 +332,8 @@
             "role" : "output",
             "type" : "text",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the Z dimension",
-            "id" : "ExtZ"
+            "id" : "ExtZ",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -325,7 +343,8 @@
             "help" : "The percent of peptide bonds identified by UCSF Chimera as &alpha;-Helix",
             "id" : "helix",
             "label" : "% Helix",
-            "role" : "output"
+            "role" : "output",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -335,7 +354,8 @@
             "role" : "output",
             "help" : "The percent of peptide bonds identified by UCSF Chimera as &beta;-Sheet",
             "type" : "text",
-            "id" : "sheet"
+            "id" : "sheet",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -345,7 +365,8 @@
             "help" : "Links to external sites",
             "type" : "html",
             "label" : "External links",
-            "role" : "output"
+            "role" : "output",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -355,7 +376,8 @@
             "role" : "output",
             "help" : "Note - the PDB and CIF have signal peptides removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model",
             "id" : "downloads",
-            "type" : "html"
+            "type" : "html",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
@@ -365,7 +387,8 @@
             "label" : "SAXS P(r)",
             "help" : "The P(r) is computed on the structure for comparison with SAXS derived data and is normalized by molecular mass",
             "type" : "plotly",
-            "id" : "prplot"
+            "id" : "prplot",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }
