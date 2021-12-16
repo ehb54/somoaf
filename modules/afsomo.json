@@ -125,7 +125,18 @@
     "fields" : [
         {
             "role" : "input",
-            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://link.springer.com/article/10.1007%2Fs00249-018-1296-0>Hydrodynamic and Structural Calculations</a> on <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Predicted Structures</h5>",
+            "label" : "<h4>US-SOMO-AF</h4>",
+            "type" : "label",
+            "id" : "label_00"
+            ,"marginbottom"    : "0px"
+            ,"layout" : {
+                "parent" : "header"
+            }
+        },
+        {
+            "role" : "input",
+            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://link.springer.com/article/10.1007%2Fs00249-018-1296-0>Hydrodynamic, Structural</a> and <a target=_blank href=https://www.mpibpc.mpg.de/sesca>SESCA CD</a> Calculations on <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Predicted Structures</h5>",
+#            "label" : "<h5>US-SOMO Hydrodynamic, Structural and SESCA CD Calculations on AlphaFold Predicted Structures</h5>",
             "type" : "label",
             "id" : "label_0"
             ,"marginbottom"    : "45px"
@@ -196,7 +207,7 @@
             }
         },
         {
-            "help" : "Residues cut from the AlphaFold structure prior to hydrodynamic calculations<br>N.B. All results are computed with these residues removed.",
+            "help" : "Identified from the UniProt&apos;s &quot;PTM/Processing Signal peptide&quot;<br>All results are computed with these residues removed.",
             "id" : "sp",
             "type" : "text",
             "role" : "output",
@@ -218,10 +229,21 @@
             }
         },
         {
+            "label" : "Mean confidence",
+            "role" : "output",
+            "help" : "Mean per-residue confidence is computed from the structure&apos;s AlphaFold residue confidence",
+            "type" : "text",
+            "id" : "afmeanconf",
+            "labelmargintop" : "0.5rem"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
             "help" : "The date hydrodynamic and structural calculations were performed",
             "id" : "somodate",
             "type" : "text",
-            "label" : "Hydrodynamic & structural calculations date",
+            "label" : "Hydrodynamic, structural and CD calculations date",
             "role" : "output",
             "labelmargintop" : "0.5rem"
             ,"layout" : {
@@ -253,7 +275,7 @@
         {
             "label" : "Translational diffusion coefficient <b><i>D<sup>0</sup><sub>20,w</sub></i></b> &nbsp;[F]",
             "role" : "output",
-            "help" : "Computed from the hydrated structure, [F] (Ficks) = 1e-7 [cm/sec<sup>2</sup>]",
+            "help" : "Computed from the theoretically hydrated structure, [F] (Ficks) = 10<sup>-7</sup> [cm/sec<sup>2</sup>]",
             "id" : "Dtr",
             "type" : "text",
             "labelmargintop" : "0.5rem"
@@ -285,7 +307,7 @@
         },
         {
             "type" : "text",
-            "help" : "Computed from the hydrated structure",
+            "help" : "Computed from the theoretically hydrated structure",
             "id" : "Eta",
             "label" : "Intrinsic viscosity <b>[<i>&eta;</i>]</b> &nbsp;[cm<sup>3</sup>/g]",
             "role" : "output",
@@ -306,7 +328,7 @@
             }
         },
         {
-            "label" : "Maximum extensions X [nm]",
+            "label" : "Maximum extension X [nm]",
             "role" : "output",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the X dimension",
             "type" : "text",
@@ -318,7 +340,7 @@
         },
         {
             "role" : "output",
-            "label" : "Maximum extensions Y [nm]",
+            "label" : "Maximum extension Y [nm]",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the Y dimension",
             "id" : "ExtY",
             "type" : "text",
@@ -328,7 +350,7 @@
             }
         },
         {
-            "label" : "Maximum extensions Z [nm]",
+            "label" : "Maximum extension Z [nm]",
             "role" : "output",
             "type" : "text",
             "help" : "The principle axis aligned structure&apos;s maximum extension in the Z dimension",
@@ -340,7 +362,7 @@
         },
         {
             "type" : "text",
-            "help" : "The percent of peptide bonds identified by UCSF Chimera as &alpha;-Helix",
+            "help" : "The percent of peptide bonds identified by DSSP, implemented in UCSF Chimera, as &alpha;-Helix",
             "id" : "helix",
             "label" : "% Helix",
             "role" : "output",
@@ -352,7 +374,7 @@
         {
             "label" : "% Sheet",
             "role" : "output",
-            "help" : "The percent of peptide bonds identified by UCSF Chimera as &beta;-Sheet",
+            "help" : "The percent of peptide bonds identified by DSSP, implemented in UCSF Chimera, as &beta;-Sheet",
             "type" : "text",
             "id" : "sheet",
             "labelmargintop" : "0.5rem"
@@ -374,7 +396,7 @@
         {
             "label" : "Downloads",
             "role" : "output",
-            "help" : "Note - the PDB and CIF have signal peptides removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model",
+            "help" : "Notes<br>PDB and mmCIF - signal peptide removed (if present); disulphide bonds, &alpha;-Helix and &Beta;-Sheet annotated<br>mmCIF was produced using RCSB&apos;s MAXIT Suite from the PDB<br>All zip&apos;d - zip archive for this model<br>All txz&apos;d - tar xz archive for this model",
             "id" : "downloads",
             "type" : "html",
             "labelmargintop" : "0.5rem"
@@ -394,12 +416,25 @@
             }
         },
         {
-            "width" : "100%",
-            "label" : "",
             "role" : "output",
-            "jsmoladd" : "ribbon only; color structure",
+            "label" : "CD (Circular Dichroism) spectrum",
+            "help" : "The CD is computed on the structure for comparison with CD experimental data",
+            "type" : "plotly",
+            "id" : "cdplot",
+            "labelmargintop" : "0.5rem"
+            ,"layout" : {
+                "parent" : "resultpanel"
+            }
+        },
+        {
+            "width" : "100%",
+            "label" : "Structure",
+            "help"  : "Coloring is by per residue confidence<br>Blues are highest confidence, reds lowest<br>See the AlphaFold external link for confidence details<br>Note - AlphaFold viewer has modified coloring",
+            "role" : "output",
+            "jsmoladd" : "ribbon only; color temperature",
             "id" : "struct",
-            "type" : "atomicstructure"
+            "type" : "atomicstructure",
+            "labelmargintop" : "0.5rem"
             ,"layout" : {
                 "parent" : "resultpanel"
             }

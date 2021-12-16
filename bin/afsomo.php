@@ -1,6 +1,12 @@
 #!/usr/local/bin/php
 <?php
 
+## user settings
+
+$papercolors = true;
+
+## end user settings
+
 if ( count( $argv ) != 2 ) {
     echo '{"error":"$self requires a JSON input object"}';
     exit;
@@ -178,9 +184,12 @@ try {
     json_exit();
 }
 
+$searchkey = preg_replace( '/^AF-/i', '', $input->searchkey );
+
+
 ### find in db
 try {
-    $query = [ '_id' => new \MongoDB\BSON\Regex( '^' . $input->searchkey, 'i' ) ];
+    $query = [ '_id' => new \MongoDB\BSON\Regex( '^' . $searchkey, 'i' ) ];
 
     # $output->_textarea = "query:\n" . json_encode( $query, JSON_PRETTY_PRINT ) . "\n";
 
@@ -312,45 +321,51 @@ https://www.uniprot.org/uniprot/A0A023GPK8
 
 $uniprot_name      = preg_replace( '/-F.*$/', '', $found->_id );
 $output->links     = 
-    sprintf( "<a target=_blank href=https://www.uniprot.org/uniprot/%s>UniProt &#x1F517;</a>&nbsp;&nbsp;&nbsp;", $uniprot_name )
-    . sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>AlphaFold &#x1F517;</a>",             $uniprot_name )
+    "<div style='margin-top:0.5rem;margin-bottom:0rem;'>"
+    . sprintf( "<a target=_blank href=https://www.uniprot.org/uniprot/%s>UniProt &#x1F517;</a>&nbsp;&nbsp;&nbsp;", $uniprot_name )
+    . sprintf( "<a target=_blank href=https://alphafold.ebi.ac.uk/entry/%s>AlphaFold &#x1F517;</a>",               $uniprot_name )
+    . "</div>"
     ;
-$output->name      = $found->name;
-$output->title     = str_replace( 'PREDICTION FOR ', "PREDICTION FOR\n", $found->title );
-$output->source    = str_replace( '; ', "\n", $found->source );
-$output->sp        = $found->sp ? $found->sp : "n/a";
-$output->afdate    = $found->afdate;
-$output->somodate  = $found->somodate;
-$output->mw        = sprintf( "%.1f", $found->mw );
-$output->psv       = $found->psv;
-$output->S         = sprintf( "%.3g", $found->S );
-$output->Dtr       = sprintf( "%.3g", $found->Dtr * 1e7 );
-$output->Rs        = sprintf( "%.3g", $found->Rs );
-$output->Eta       = sprintf( "%.3g +/- %.2f", $found->Eta, $found->Eta_sd );
-$output->Rg        = sprintf( "%.3g", $found->Rg );
-$output->ExtX      = sprintf( "%.2f", $found->ExtX );
-$output->ExtY      = sprintf( "%.2f", $found->ExtY );
-$output->ExtZ      = sprintf( "%.2f", $found->ExtZ );
-$output->helix     = sprintf( "%.1f", $found->helix );
-$output->sheet     = sprintf( "%.1f", $found->sheet );
-$output->downloads = 
-    sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
-    . sprintf( "<a target=_blank href=data/cif/%s-somo.cif>CIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",         $found->name )
-    . sprintf( "<a target=_blank href=data/pr/%s-somo.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",         $found->name )
-    . sprintf( "<a target=_blank href=data/csv/%s-somo.csv>CSV results &#x21D3;</a>&nbsp;&nbsp;&nbsp;", $found->name )
-    . sprintf( "<a target=_blank href=data/zip/%s-somo.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->name )
-    . sprintf( "<a target=_blank href=data/txz/%s-somo.txz>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",   $found->name )
+$output->name       = $found->name;
+$output->title      = str_replace( 'PREDICTION FOR ', "PREDICTION FOR\n", $found->title );
+$output->source     = str_replace( '; ', "\n", $found->source );
+$output->sp         = $found->sp ? $found->sp : "n/a";
+$output->afdate     = $found->afdate;
+$output->somodate   = $found->somodate;
+$output->mw         = sprintf( "%.1f", $found->mw );
+$output->psv        = $found->psv;
+$output->S          = sprintf( "%.3g", $found->S );
+$output->Dtr        = sprintf( "%.3g", $found->Dtr * 1e7 );
+$output->Rs         = sprintf( "%.3g", $found->Rs );
+$output->Eta        = sprintf( "%.3g +/- %.2f", $found->Eta, $found->Eta_sd );
+$output->Rg         = sprintf( "%.3g", $found->Rg );
+$output->ExtX       = sprintf( "%.2f", $found->ExtX );
+$output->ExtY       = sprintf( "%.2f", $found->ExtY );
+$output->ExtZ       = sprintf( "%.2f", $found->ExtZ );
+$output->helix      = sprintf( "%.1f", $found->helix );
+$output->sheet      = sprintf( "%.1f", $found->sheet );
+$output->afmeanconf = sprintf( "%.2f", $found->afmeanconf );
+$output->downloads  = 
+    "<div style='margin-top:0.5rem;margin-bottom:0rem;'>"
+    . sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
+    . sprintf( "<a target=_blank href=data/mmcif/%s-somo.cif>mmCIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",       $found->name )
+    . sprintf( "<a target=_blank href=data/pr/%s-somo-pr.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",        $found->name )
+    . sprintf( "<a target=_blank href=data/cd/%s-somo-sesca-cd.dat>CD &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->name )
+    . sprintf( "<a target=_blank href=data/csv/%s-somo.csv>CSV &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
+    . sprintf( "<a target=_blank href=data/zip/%s-somo.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->name )
+    . sprintf( "<a target=_blank href=data/txz/%s-somo.txz>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->name )
+    . "</div>"
     ;
 
 ## pdb
-$output->struct = sprintf( "data/pdb/%s-somo.pdb", $found->name );
+$output->struct = sprintf( "data/pdb_tfrev/%s-somo.pdb", $found->name );
 
 ## plotly
 
-$plotfile = sprintf( "/var/www/html/somoaf/data/pr/%s-somo.dat", $found->name );
-if ( file_exists( $plotfile ) ) {
-    if ( $plotfiledata = file_get_contents( $plotfile ) ) {
-        $plotin = explode( "\n", $plotfiledata );
+$prfile = sprintf( "/var/www/html/somoaf/data/pr/%s-somo-pr.dat", $found->name );
+if ( file_exists( $prfile ) ) {
+    if ( $prfiledata = file_get_contents( $prfile ) ) {
+        $plotin = explode( "\n", $prfiledata );
         $plot = json_decode(
             '{
                 "data" : [
@@ -384,8 +399,8 @@ if ( file_exists( $plotfile ) ) {
                     ,"yaxis" : {
                        "gridcolor" : "rgba(233,222,222,0.5)"
                        ,"title" : {
-                       "text" : "Frequency"
-                        ,"color"  : "rgb(233,222,222)"
+                       "text" : "Normalized Frequency"
+                       ,"standoff" : 20
                         ,"font" : {
                             "color"  : "rgb(233,222,222)"
                         }
@@ -410,15 +425,98 @@ if ( file_exists( $plotfile ) ) {
             }
         }
             
+        if ( isset( $papercolors ) && $papercolors ) {
+            $plot->data[0]->line->color               = "rgb(50,50,122)";
+            $plot->layout->font->color                = "rgb(0,0,0)";
+            $plot->layout->xaxis->title->font->color  = "rgb(0,0,0)";
+            $plot->layout->yaxis->title->font->color  = "rgb(0,0,0)";
+            $plot->layout->xaxis->gridcolor           = "rgb(150,150,150)";
+            $plot->layout->yaxis->gridcolor           = "rgb(150,150,150)";
+        }
+
         $output->prplot = $plot;
     }
 }
     
+$cdfile = sprintf( "/var/www/html/somoaf/data/cd/%s-somo-sesca-cd.dat", $found->name );
+if ( file_exists( $cdfile ) ) {
+    if ( $cdfiledata = file_get_contents( $cdfile ) ) {
+        $plotin = explode( "\n", $cdfiledata );
+        $plot = json_decode(
+            '{
+                "data" : [
+                    {
+                     "x"     : []
+                     ,"y"    : []
+                     ,"mode" : "lines"
+                     ,"line" : {
+                         "color"  : "rgb(150,150,222)"
+                         ,"width" : 2
+                      }
+                    }
+                 ]
+                 ,"layout" : {
+                    "title" : "Circular Dichroism Spectrum"
+                    ,"font" : {
+                        "color"  : "rgb(233,222,222)"
+                    }
+                    ,"paper_bgcolor": "rgba(0,0,0,0)"
+                    ,"plot_bgcolor": "rgba(0,0,0,0)"
+                    ,"xaxis" : {
+                       "gridcolor" : "rgba(233,222,222,0.5)"
+                       ,"title" : {
+                       "text" : "Wavelength [nm]"
+                        ,"gridcolor" : "rgb(111,111,111)"
+                        ,"font" : {
+                            "color"  : "rgb(233,222,222)"
+                        }
+                     }
+                    }
+                    ,"yaxis" : {
+                       "gridcolor" : "rgba(233,222,222,0.5)"
+                       ,"title" : {
+                       "text" : "[&#920;] (10<sup>3</sup> deg*cm<sup>2</sup>/dmol)"
+                        ,"font" : {
+                            "color"  : "rgb(233,222,222)"
+                        }
+                     }
+                    }
+                 }
+            }'
+            );
+
+        ## first two lines are headers
+        $plotin = preg_grep( "/^\s*#/", $plotin, PREG_GREP_INVERT );
+
+        foreach ( $plotin as $linein ) {
+            $linevals = preg_split( '/\s+/', trim( $linein ) );
+            
+            if ( count( $linevals ) == 2 ) {
+                $plot->data[0]->x[] = floatval($linevals[0]);
+                $plot->data[0]->y[] = floatval($linevals[1]);
+            }
+        }
+        ## reverse order
+        $plot->data[0]->x = array_reverse( $plot->data[0]->x );
+        $plot->data[0]->y = array_reverse( $plot->data[0]->y );
+
+        if ( isset( $papercolors ) && $papercolors ) {
+            $plot->data[0]->line->color               = "rgb(50,50,122)";
+            $plot->layout->font->color                = "rgb(0,0,0)";
+            $plot->layout->xaxis->title->font->color  = "rgb(0,0,0)";
+            $plot->layout->yaxis->title->font->color  = "rgb(0,0,0)";
+            $plot->layout->xaxis->gridcolor           = "rgb(150,150,150)";
+            $plot->layout->yaxis->gridcolor           = "rgb(150,150,150)";
+        }
+
+        $output->cdplot = $plot;
+    }
+}
+
 ## log results to textarea
 
 # $output->_textarea .=  "JSON output from executable:\n" . json_encode( $output, JSON_PRETTY_PRINT ) . "\n";
 # $output->_textarea .= "JSON input from executable:\n"  . json_encode( $input, JSON_PRETTY_PRINT )  . "\n";
-
 
 json_exit();
 

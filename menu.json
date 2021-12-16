@@ -2,7 +2,7 @@
     "menu" : [
         {
             "id"       : "lookup"
-            ,"label"    : "Lookup"
+            ,"label"    : "US-SOMO-AF"
             ,"icon"     : "pngs/somo.png"
             ,"autorun"  : "afsomo"
             ,"startup"  : "true"

@@ -1,14 +1,14 @@
 # this is a project directives file
 # comments are ok but must start the line in this JSON
 {
-  "title"                     : "US-SOMO Online",
+  "title"                     : "US-SOMO Database",
 
 # "somoaf" below could be replaced, but you should probably also then replace "somoaf" in the paths below
 # the application name should not contain any special characters
   "application"               : "somoaf",
 
-  "footer"                    : "Supported by NIH-GM120600, NSF-1912444",
-  "footersize"                : "50px",
+    "footer"                    : "Supported by NIH-GM120600; NSF CHE-1265817, OAC-1740097, OAC-1912444.<br><i><small>Cookies - only one cookie is set. It is strictly necessary</small></i>",
+  "footersize"                : "90px",
 
   "version"                   : "",
 # choose your target languages to generate currently from [ "html5", "qt3", "qt4", "qt5", "java" ]
@@ -37,7 +37,7 @@
                                  "pdb" :"rasmol"
                                 },
 # only uncomment this to have a "docs" tab in html5 which hyperlinks to your self created docs directory 
-#  "docsbaseurl"               : "docs",
+"docsbaseurl"               : "docs",
 
 # global hover help texts
   "help"                      : {
@@ -157,8 +157,8 @@
 #  ,"usesplash"                  : "true"
 
 # only uncomment if you have configured secure web sockets in your webserver
-#  ,"usewss"                  : "true"
-  ,"usews" : "true"
+  ,"usewss"                  : "true"
+#  ,"usews" : "true"
 
 # the following are currently only meaningful for "html5" language
   ,"appconfig"                 : "/opt/genapp/somoaf/appconfig.json"
@@ -188,10 +188,11 @@
 #        "theme" : "simplex"
 #        "theme" : "sketchy"
 #        "theme" : "slate"
-        "theme" : "solar"
+#        "theme" : "solar"
 #        "theme" : "spacelab"
 #        "theme" : "superhero"
 #        "theme" : "united"
 #        "theme" : "yeti"
+        "theme" : "somoaf"
   }
 }
