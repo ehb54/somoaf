@@ -319,7 +319,14 @@ if ( !$found ) {
 
 https://www.uniprot.org/uniprot/A0A023GPK8
 
-$uniprot_name      = preg_replace( '/-F.*$/', '', $found->_id );
+$uniprot_name      = preg_replace( '/-F.*$/',      '', $found->_id );
+$proc_opt          = preg_replace( '/^.*-F\\d+/',  '', $found->_id );
+$af_version        = preg_replace( '/^.*model_v/', '', $found->name );
+
+preg_match( '/^.*-(F\d+)-/', $found->name, $matches );
+$af_frame          = $matches[1];
+$base_name         = "AF-${uniprot_name}-${af_frame}${proc_opt}-model_v${af_version}";
+
 $output->links     = 
     "<div style='margin-top:0.5rem;margin-bottom:0rem;'>"
     . sprintf( "<a target=_blank href=https://www.uniprot.org/uniprot/%s>UniProt &#x1F517;</a>&nbsp;&nbsp;&nbsp;", $uniprot_name )
@@ -329,7 +336,13 @@ $output->links     =
 $output->name       = $found->name;
 $output->title      = str_replace( 'PREDICTION FOR ', "PREDICTION FOR\n", $found->title );
 $output->source     = str_replace( '; ', "\n", $found->source );
-$output->sp         = $found->sp ? $found->sp : "n/a";
+# $output->sp         = $found->sp ? $found->sp : "n/a";
+$output->proc       = $found->proc;
+if ( !$found->proc ) {
+    $output->proc = $found->sp ? "Signal peptide $found->sp removed" : "none";
+}
+
+$output->res        = $found->res;
 $output->afdate     = $found->afdate;
 $output->somodate   = $found->somodate;
 $output->mw         = sprintf( "%.1f", $found->mw );
@@ -347,22 +360,22 @@ $output->sheet      = sprintf( "%.1f", $found->sheet );
 $output->afmeanconf = sprintf( "%.2f", $found->afmeanconf );
 $output->downloads  = 
     "<div style='margin-top:0.5rem;margin-bottom:0rem;'>"
-    . sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
-    . sprintf( "<a target=_blank href=data/mmcif/%s-somo.cif>mmCIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",       $found->name )
-    . sprintf( "<a target=_blank href=data/pr/%s-somo-pr.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",        $found->name )
-    . sprintf( "<a target=_blank href=data/cd/%s-somo-sesca-cd.dat>CD &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $found->name )
-    . sprintf( "<a target=_blank href=data/csv/%s-somo.csv>CSV &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $found->name )
-    . sprintf( "<a target=_blank href=data/zip/%s-somo.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->name )
-    . sprintf( "<a target=_blank href=data/txz/%s-somo.txz>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $found->name )
+    . sprintf( "<a target=_blank href=data/pdb/%s-somo.pdb>PDB &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $base_name )
+    . sprintf( "<a target=_blank href=data/mmcif/%s-somo.cif>mmCIF &#x21D3;</a>&nbsp;&nbsp;&nbsp;",       $base_name )
+    . sprintf( "<a target=_blank href=data/pr/%s-somo-pr.dat>P(r) &#x21D3;</a>&nbsp;&nbsp;&nbsp;",        $base_name )
+    . sprintf( "<a target=_blank href=data/cd/%s-somo-sesca-cd.dat>CD &#x21D3;</a>&nbsp;&nbsp;&nbsp;",    $base_name )
+    . sprintf( "<a target=_blank href=data/csv/%s-somo.csv>CSV &#x21D3;</a>&nbsp;&nbsp;&nbsp;",           $base_name )
+    . sprintf( "<a target=_blank href=data/zip/%s-somo.zip>All zip'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $base_name )
+    . sprintf( "<a target=_blank href=data/txz/%s-somo.txz>All txz'd &#x21D3;</a>&nbsp;&nbsp;&nbsp;",     $base_name )
     . "</div>"
     ;
 
 ## pdb
-$output->struct = sprintf( "data/pdb_tfrev/%s-somo.pdb", $found->name );
+$output->struct = sprintf( "data/pdb_tfrev/%s-somo.pdb", $base_name );
 
 ## plotly
 
-$prfile = sprintf( "/var/www/html/somoaf/data/pr/%s-somo-pr.dat", $found->name );
+$prfile = sprintf( "/var/www/html/somoaf/data/pr/%s-somo-pr.dat", $base_name );
 if ( file_exists( $prfile ) ) {
     if ( $prfiledata = file_get_contents( $prfile ) ) {
         $plotin = explode( "\n", $prfiledata );
@@ -438,7 +451,7 @@ if ( file_exists( $prfile ) ) {
     }
 }
     
-$cdfile = sprintf( "/var/www/html/somoaf/data/cd/%s-somo-sesca-cd.dat", $found->name );
+$cdfile = sprintf( "/var/www/html/somoaf/data/cd/%s-somo-sesca-cd.dat", $base_name );
 if ( file_exists( $cdfile ) ) {
     if ( $cdfiledata = file_get_contents( $cdfile ) ) {
         $plotin = explode( "\n", $cdfiledata );
