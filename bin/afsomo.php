@@ -175,6 +175,17 @@ function tcpquestion( $question, $timeout = 300, $buffersize = 65536 ) {
     return $data;
 }
 
+function digitfix( $strval, $digits ) {
+    $strnodp = str_replace( ".", "", $strval );
+    if ( strlen($strnodp) >= $digits ) {
+        return $strval;
+    }
+    if ( strpos( $strval, "." ) ) {
+        return $strval . "0";
+    }
+    return $strval . ".0";
+}
+
 ### open db
 
 try {
@@ -347,11 +358,11 @@ $output->afdate     = $found->afdate;
 $output->somodate   = $found->somodate;
 $output->mw         = sprintf( "%.1f", $found->mw );
 $output->psv        = $found->psv;
-$output->S          = sprintf( "%.3g", $found->S );
-$output->Dtr        = sprintf( "%.3g", $found->Dtr * 1e7 );
-$output->Rs         = sprintf( "%.3g", $found->Rs );
-$output->Eta        = sprintf( "%.3g +/- %.2f", $found->Eta, $found->Eta_sd );
-$output->Rg         = sprintf( "%.3g", $found->Rg );
+$output->S          = digitfix( sprintf( "%.3g", $found->S ), 3 );
+$output->Dtr        = digitfix( sprintf( "%.3g", $found->Dtr * 1e7 ), 3 );
+$output->Rs         = digitfix( sprintf( "%.3g", $found->Rs ), 3 );
+$output->Eta        = sprintf( "%s +/- %.2f", digitfix( sprintf( "%.3g", $found->Eta ), 3 ), $found->Eta_sd );
+$output->Rg         = digitfix( sprintf( "%.3g", $found->Rg );
 $output->ExtX       = sprintf( "%.2f", $found->ExtX );
 $output->ExtY       = sprintf( "%.2f", $found->ExtY );
 $output->ExtZ       = sprintf( "%.2f", $found->ExtZ );
