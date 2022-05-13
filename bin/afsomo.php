@@ -358,6 +358,7 @@ $output->afdate     = $found->afdate;
 $output->somodate   = $found->somodate;
 $output->mw         = sprintf( "%.1f", $found->mw );
 $output->psv        = $found->psv;
+$output->hyd        = $found->hyd;
 $output->S          = digitfix( sprintf( "%.3g", $found->S ), 3 );
 $output->Dtr        = digitfix( sprintf( "%.3g", $found->Dtr * 1e7 ), 3 );
 $output->Rs         = digitfix( sprintf( "%.3g", $found->Rs ), 3 );
