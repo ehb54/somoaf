@@ -135,7 +135,8 @@
         },
         {
             "role" : "input",
-            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://link.springer.com/article/10.1007%2Fs00249-018-1296-0>Hydrodynamic, Structural</a> and <a target=_blank href=https://www.mpibpc.mpg.de/sesca>SESCA CD</a> Calculations on <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Predicted Structures</h5><br>Warning: the computed data are meaningful for monomeric single chain proteins, and potential prosthetic groups are not present in the AF-generated structures.<br>The flexibility of extensive unstructured regions was not included in the computations",
+            "label" : "<h5><a target=_blank href=http://somo.aucsolutions.com>US-SOMO</a> <a target=_blank href=https://link.springer.com/article/10.1007%2Fs00249-018-1296-0>Hydrodynamic, Structural</a> and <a target=_blank href=https://www.mpibpc.mpg.de/sesca>SESCA CD</a> Calculations on <a target=_blank href=https://alphafold.ebi.ac.uk>AlphaFold</a> Predicted Structures</h5><br>Warning: the computed data are meaningful for monomeric single chain proteins, and potential prosthetic groups are not present in the AF-generated structures.<br>The flexibility of extensive unstructured regions was not taken into account in the computations.",
+
 #            "label" : "<h5>US-SOMO Hydrodynamic, Structural and SESCA CD Calculations on AlphaFold Predicted Structures</h5>",
             "type" : "label",
             "id" : "label_0"
@@ -329,7 +330,7 @@
         },
         {
             "type" : "text",
-            "help" : "Computed from the atomic structure",
+            "help" : "Computed from the non hydrated structure using the mass and positions of the atoms. This value should be close to the Rg derived from SANS in low or zero concentrations of D<sub>2</sub>O [<a href=https://doi.org/10.1107/S1399004714013923>doi:10.1107/S1399004714013923</a>].",
             "id" : "Rg",
             "role" : "output",
             "label" : "Radius of gyration <b><i>R<sub>g</sub></i></b> &nbsp;[&#8491;]",
