@@ -353,7 +353,7 @@
         {
             "label" : "Maximum extension X [nm]",
             "role" : "output",
-            "help" : "The principle axis aligned structure&apos;s maximum extension in the X dimension",
+            "help" : "The principal axis aligned structure&apos;s maximum extension in the X dimension",
             "type" : "text",
             "id" : "ExtX",
             "labelmargintop" : "0.5rem"
@@ -364,7 +364,7 @@
         {
             "role" : "output",
             "label" : "Maximum extension Y [nm]",
-            "help" : "The principle axis aligned structure&apos;s maximum extension in the Y dimension",
+            "help" : "The principal axis aligned structure&apos;s maximum extension in the Y dimension",
             "id" : "ExtY",
             "type" : "text",
             "labelmargintop" : "0.5rem"
@@ -376,7 +376,7 @@
             "label" : "Maximum extension Z [nm]",
             "role" : "output",
             "type" : "text",
-            "help" : "The principle axis aligned structure&apos;s maximum extension in the Z dimension",
+            "help" : "The principal axis aligned structure&apos;s maximum extension in the Z dimension",
             "id" : "ExtZ",
             "labelmargintop" : "0.5rem"
             ,"layout" : {
