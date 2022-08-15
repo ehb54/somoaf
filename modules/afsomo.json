@@ -298,7 +298,7 @@
         {
             "label" : "Translational diffusion coefficient <b><i>D<sup>0</sup><sub>20,w</sub></i></b> &nbsp;[F]",
             "role" : "output",
-            "help" : "Computed from the theoretically hydrated structure, [F] (Ficks) = 10<sup>-7</sup> [cm/sec<sup>2</sup>]",
+            "help" : "Computed from the theoretically hydrated structure, [F] (Ficks) = 10<sup>-7</sup> [cm<sup>2</sup>/sec]",
             "id" : "Dtr",
             "type" : "text",
             "labelmargintop" : "0.5rem"
